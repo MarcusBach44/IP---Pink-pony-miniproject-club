@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-img = cv2.imread("./Cropped and perspective corrected boards/1.jpg")
+img = cv2.imread("./Cropped and perspective corrected boards/2.jpg")
 
 squarePieces = []
 rows = [1, 2, 3, 4, 5]
@@ -15,11 +15,13 @@ fifthWidth: int = width // 5
 
 def showSquare():
     squareDivision = 0
+    #counter = 0
     for square in squares:
         squareDivision = squareDivision + fifthWidth
         squareSection = img[rowDivision - fifthHeight:rowDivision, squareDivision - fifthWidth:squareDivision]
-        squarePieces.append(squareSection)
-        counter = counter + 1
+        #cv2.imshow("img", squareSection)
+        #cv2.waitKey(0)
+        #counter = counter + 1
         square += square
 
 for row in rows:

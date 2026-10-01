@@ -1,8 +1,11 @@
 import numpy as np
 import cv2
 
-img = cv2.imread("./Game pieces/Water.png")
+img = cv2.imread("./Game pieces/Plain.png")
+
 imgBlurred = cv2.medianBlur(img, 97)
+#cv2.imshow("Blurred", imgBlurred)
+#cv2.waitKey(0)
 
 avrColorByRow = np.average(imgBlurred, axis=0)
 avrColor = np.average(avrColorByRow, axis=0)
