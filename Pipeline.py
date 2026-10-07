@@ -17,8 +17,6 @@ for tile in tiles:
     tilesCrownCount.append(find_crowns(tile, templateCrown))
     print(color.check_color(tile))
 
-
-
 #Looks through all tiles to find groups, separates each group into a list
 
 
