@@ -40,10 +40,10 @@ def find_crowns(img, crowns):
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
         threshold = 0.6
         loc = np.where(res >= threshold)
-        cv2.destroyAllWindows()
-        cv2.imshow("Crowns", template)
-        cv2.imshow("image", img)
-        cv2.waitKey(0)
+        #cv2.destroyAllWindows()
+        #cv2.imshow("Crowns", template)
+        #cv2.imshow("image", img)
+        #v2.waitKey(0)
 
 
         for pt in zip(*loc[::-1]):
@@ -60,9 +60,9 @@ def find_crowns(img, crowns):
                 previous_crowns2 = previous_crown
                 previous_crown = pt
 
-                cv2.imshow("Crowns", template)
-                cv2.imshow("image", img)
-                cv2.waitKey(0)
+                #cv2.imshow("Crowns", template)
+                #cv2.imshow("image", img)
+                #cv2.waitKey(0)
 
     return amount_of_crowns
 

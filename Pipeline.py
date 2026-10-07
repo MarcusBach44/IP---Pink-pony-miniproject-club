@@ -2,6 +2,7 @@ import cv2
 
 from find_crowns import find_crowns
 from seperateSquares import SeperatesTiles
+import blurPicturesAndFindColors as color
 
 img = cv2.imread("./Cropped and perspective corrected boards/1.jpg")
 templateCrown = cv2.imread('./Crown Images/crown4.jpg')
@@ -14,6 +15,9 @@ tiles = SeperatesTiles(img)
 tilesCrownCount = []
 for tile in tiles:
     tilesCrownCount.append(find_crowns(tile, templateCrown))
+    print(color.check_color(tile))
+
+
 
 #Looks through all tiles to find groups, separates each group into a list
 

@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+"""
 img = cv2.imread("./Game pieces/Blue tower.png")
 
 imgBlurred = cv2.medianBlur(img, 97)
@@ -14,6 +14,16 @@ avrColor = np.average(avrColorByRow, axis=0)
 
 #Keep in mind at den printer det som BGR, fordi selvfølgelig gør den det  ._.
 print(avrColor)
+"""
+def find_avg_color(img):
+    imgBlurred = cv2.medianBlur(img, 97)
+    # cv2.imshow("Blurred", imgBlurred)
+    # cv2.waitKey(0)
+
+    avrColorByRow = np.average(imgBlurred, axis=0)
+    avrColor = np.average(avrColorByRow, axis=0)
+
+    return avrColor
 
 # All the spectrums are based on the average colors (look at picture in report) where i took the lowest number -3 or highest number +3
 def desertColor(img):
@@ -23,7 +33,7 @@ def desertColor(img):
     desert_upper = np.array([59, 91, 102], np.uint8)
 
     desert_sectrum = cv2.inRange(img, desert_lower, desert_upper)
-    if avrColor in desert_sectrum:
+    if desert_lower <= find_avg_color(img).all <= desert_upper:
         classification = True
 
     return classification
@@ -36,7 +46,7 @@ def mineColor(img):
     mine_upper = np.array([28, 40, 46], np.uint8)
 
     mine_spectrum = cv2.inRange(img, mine_lower, mine_upper)
-    if avrColor in mine_spectrum:
+    if mine_lower <= find_avg_color(img) <= mine_upper:
         classification = True
 
     return classification
@@ -49,7 +59,7 @@ def fieldColor(img):
     field_upper = np.array([54, 157, 177], np.uint8)
 
     field_spectrum = cv2.inRange(img, field_lower, field_upper)
-    if avrColor in field_spectrum:
+    if field_lower <= find_avg_color(img) <= field_upper:
         classification = True
 
     return classification
@@ -62,7 +72,7 @@ def forrestColor(img):
     forrest_upper = np.array([29, 65, 62], np.uint8)
 
     forrest_spectrum = cv2.inRange(img, forrest_lower, forrest_upper)
-    if avrColor in forrest_spectrum:
+    if forrest_lower <= find_avg_color(img) <= forrest_upper:
         classification = True
 
     return classification
@@ -75,7 +85,7 @@ def plainColor(img):
     plain_upper = np.array([57, 153, 119], np.uint8)
 
     plain_spectrum = cv2.inRange(img, plain_lower, plain_upper)
-    if avrColor in plain_spectrum:
+    if plain_lower <= find_avg_color(img) <= plain_upper:
         classification = True
 
     return classification
@@ -88,7 +98,7 @@ def waterColor(img):
     water_upper = np.array([175, 91, 47], np.uint8)
 
     water_spectrum = cv2.inRange(img, water_lower, water_upper)
-    if avrColor in water_spectrum:
+    if water_lower <= find_avg_color(img) <= water_upper:
         classification = True
 
     return classification
@@ -129,7 +139,33 @@ def towerColor(img):
     towerYellow_upper = np.array([33, 61, 62], np.uint8)
     towerYellow_spectrum = cv2.inRange(img, towerYellow_lower, towerYellow_upper)
 
-    if avrColor in towerRed_spectrum or towerBlue_spectrum or towerGreen_spectrum or towerYellow_spectrum or Red_spectrum or Blue_spectrum or Green_spectrum or Yellow_spectrum:
+    if (towerRed_lower <= find_avg_color(img) <= towerRed_upper
+            or towerBlue_lower <= find_avg_color(img) <= towerBlue_upper
+            or towerGreen_lower <= find_avg_color(img) <= towerGreen_upper
+            or towerYellow_lower <= find_avg_color(img) <= towerYellow_upper
+            or Red_lower <= find_avg_color(img) <= Red_upper
+            or Blue_lower <= find_avg_color(img) <= Blue_upper
+            or Green_lower <= find_avg_color(img) <= Green_upper
+            or Yellow_lower <= find_avg_color(img) <= Yellow_upper):
         classification = True
 
     return classification
+
+
+def check_color(img):
+
+    match = desertColor(img)
+    if not match:
+        match = mineColor(img)
+    if not match:
+        match = fieldColor(img)
+    if not match:
+        match = forrestColor(img)
+    if not match:
+        match = plainColor(img)
+    if not match:
+        match = waterColor(img)
+    if not match:
+        match = towerColor(img)
+
+    return match
