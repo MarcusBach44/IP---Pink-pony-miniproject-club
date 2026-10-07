@@ -3,8 +3,8 @@ import cv2
 from find_crowns import find_crowns
 from seperateSquares import SeperatesTiles
 
-img = cv2.imread("./Cropped and perspective corrected boards/1.jpg")
-templateCrown = cv2.imread('./Crown Images/crown4.jpg')
+img = cv2.imread("./Cropped and perspective corrected boards/66.jpg")
+templateCrown = cv2.imread("./Crown Images/crown6.jpg")
 
 #Separate Tiles into a list, going from 0-24
 tiles = SeperatesTiles(img)
@@ -15,6 +15,10 @@ tilesCrownCount = []
 for tile in tiles:
     tilesCrownCount.append(find_crowns(tile, templateCrown))
 
-#Looks through all tiles to find groups, separates each group into a list
+crownamount = 0
+for tile in tilesCrownCount:
+    crownamount += tile
+print(crownamount)
 
+#Looks through all tiles to find groups, separates each group into a list
 
