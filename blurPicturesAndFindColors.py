@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-img = cv2.imread("./Game pieces/Plain.png")
+img = cv2.imread("./Game pieces/Blue tower.png")
 
 imgBlurred = cv2.medianBlur(img, 97)
 #cv2.imshow("Blurred", imgBlurred)
