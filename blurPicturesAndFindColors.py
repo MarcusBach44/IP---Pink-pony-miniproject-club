@@ -51,36 +51,36 @@ def ifSame(img):
 # All the spectrum are based on the average colors (look at picture in report)
 def desertColor(img):
     desert_lower = np.array([27, 71, 79], np.uint8)
-    desert_upper = np.array([64, 110, 131], np.uint8)
+    desert_upper = np.array([64, 108, 117], np.uint8)
     result = Color(desert_lower, desert_upper, img)
     return result
 
 def mineColor(img):
-    mine_lower = np.array([11, 30, 36], np.uint8)
-    mine_upper = np.array([30, 67, 81], np.uint8)
+    mine_lower = np.array([11, 30, 54], np.uint8)
+    mine_upper = np.array([30, 67, 82], np.uint8)
     result = Color(mine_lower, mine_upper, img)
     return result
 
 def fieldColor(img):
-    field_lower = np.array([1, 126, 148], np.uint8)
+    field_lower = np.array([1, 115, 134], np.uint8)
     field_upper = np.array([56, 165, 187], np.uint8)
     result = Color(field_lower, field_upper, img)
     return result
 
 def forrestColor(img):
-    forrest_lower = np.array([14, 56, 45], np.uint8)
-    forrest_upper = np.array([29, 65, 62], np.uint8)
+    forrest_lower = np.array([9, 43, 30], np.uint8)
+    forrest_upper = np.array([29, 68, 62], np.uint8)
     result = Color(forrest_lower, forrest_upper, img)
     return result
 
 def plainColor(img):
-    plain_lower = np.array([12, 112, 88], np.uint8)
+    plain_lower = np.array([12, 112, 83], np.uint8)
     plain_upper = np.array([59, 155, 121], np.uint8)
     result = Color(plain_lower, plain_upper, img)
     return result
 
 def waterColor(img):
-    water_lower = np.array([113, 68, 10], np.uint8)
+    water_lower = np.array([13, 59, 3], np.uint8)
     water_upper = np.array([177, 94, 49], np.uint8)
     result = Color(water_lower, water_upper, img)
     return result
@@ -140,33 +140,33 @@ def check_color(img):
     result = ""
 
     if desertColor(img):
-        result += "desert "
+        result = result + "desert "
     elif mineColor(img):
-        result += "mine "
+        result = result + "mine "
     elif fieldColor(img):
-        result += "field "
+        result = result + "field "
     elif forrestColor(img):
-        result += "forrest "
+        result = result + "forrest "
     elif plainColor(img):
-        result += "plain "
+        result = result + "plain "
     elif waterColor(img):
-        result += "water "
+        result = result + "water "
     elif RColor(img):
-        result += "red "
+        result = "red "
     elif RtowerColor(img):
-        result += "redT "
+        result = "redT "
     elif BColor(img):
-        result += "blue "
+        result = "blue "
     elif BtowerColor(img):
-        result += "blueT "
+        result = "blueT "
     elif GColor(img):
-        result += "green "
+        result = "green "
     elif GtowerColor(img):
-        result += "greenT "
+        result = "greenT "
     elif YColor(img):
-        result += "yellow "
+        result = "yellow "
     elif YtowerColor(img):
-        result += "yellowT "
+        result = "yellowT "
     else:
         result = "no match"
 
