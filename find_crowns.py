@@ -1,12 +1,14 @@
 import cv2
 import numpy as np
 
-image = cv2.imread("./Cropped and perspective corrected boards/65.jpg")
-cv2.imshow("Original", image)
+from seperateSquares import SeperatesTiles
 
-crown_img = cv2.imread("./Cropped and perspective corrected boards/crown4.jpg")
+#image = cv2.imread("./Cropped and perspective corrected boards/14.jpg")
+#cv2.imshow("Original", image)
 
-cv2.imshow("Crown", crown_img)
+#crown_img = cv2.imread("Crown Images/crown4.jpg")
+
+#cv2.imshow("Crown", crown_img)
 
 def create_template_array(template):
     template_array = [
@@ -27,7 +29,7 @@ def convert_array_grayscale(img_array):
 def find_crowns(img, crowns):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     cv2.imshow("Crowns", img_gray)
-    template_array_grayscale = convert_array_grayscale(crowns)
+    template_array_grayscale = convert_array_grayscale(create_template_array(crowns))
     amount_of_crowns = 0
     previous_crown = (-1, -1)
     previous_crowns2 = (-1, -1)
@@ -50,6 +52,7 @@ def find_crowns(img, crowns):
                 or (pt[0] == previous_crown[0] and pt[1] > previous_crown[1]+h)
                 or (pt[1] > previous_crown[1]+h)
                 or (pt[1] < previous_crown[1])):
+
                 img = cv2.rectangle(img, pt, (pt[0] + w, pt[1]+h), (0, 255, 0), 2)
                 amount_of_crowns += 1
                 print("Previous Crown Pos: ",previous_crown[0], previous_crown[1], " New Crown Pos: ", pt[0], pt[1])
@@ -63,9 +66,12 @@ def find_crowns(img, crowns):
 
     return amount_of_crowns
 
+"""
+tiles = SeperatesTiles(image)
 
 amount_of_crowns = find_crowns(image, create_template_array(crown_img))
 print("Amount of Crowns: ", amount_of_crowns)
 cv2.imshow("Crowns on board", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+"""
