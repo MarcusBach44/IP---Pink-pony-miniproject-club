@@ -16,6 +16,8 @@ tilesCrownCount = []
 for tile in tiles:
     tilesCrownCount.append(find_crowns(tile, templateCrown))
     print(color.check_color(tile))
+    #cv2.imshow("tile", tile)
+    #cv2.waitKey(0)
 
 #Looks through all tiles to find groups, separates each group into a list
 
