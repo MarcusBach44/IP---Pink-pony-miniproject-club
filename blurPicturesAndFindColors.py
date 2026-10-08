@@ -55,38 +55,38 @@ def areaNames():
 
 # All the spectrum are based on the average colors (look at picture in report)
 def desertColor(img):
-    desert_lower = np.array([30, 100, 140], np.uint8)
-    desert_upper = np.array([55, 140, 170], np.uint8)
+    desert_lower = np.array([30, 90, 100], np.uint8)
+    desert_upper = np.array([135, 190, 205], np.uint8)
     result = Color(desert_lower, desert_upper, img)
     return result
 
 def mineColor(img):
-    mine_lower = np.array([15, 55, 80], np.uint8)
-    mine_upper = np.array([50, 100, 130], np.uint8)
+    mine_lower = np.array([15, 50, 60], np.uint8)
+    mine_upper = np.array([70, 100, 130], np.uint8)
     result = Color(mine_lower, mine_upper, img)
     return result
 
 def fieldColor(img):
-    field_lower = np.array([5, 160, 180], np.uint8)
-    field_upper = np.array([30, 220, 250], np.uint8)
+    field_lower = np.array([1, 160, 180], np.uint8)
+    field_upper = np.array([40, 255, 255], np.uint8)
     result = Color(field_lower, field_upper, img)
     return result
 
 def forrestColor(img):
-    forrest_lower = np.array([13, 41, 30], np.uint8)
+    forrest_lower = np.array([13, 50, 30], np.uint8)
     forrest_upper = np.array([85, 175, 135], np.uint8)
     result = Color(forrest_lower, forrest_upper, img)
     return result
 
 def plainColor(img):
-    plain_lower = np.array([45, 121, 95], np.uint8)
-    plain_upper = np.array([54, 169, 136], np.uint8)
+    plain_lower = np.array([10, 145, 105], np.uint8)
+    plain_upper = np.array([70, 240, 200], np.uint8)
     result = Color(plain_lower, plain_upper, img)
     return result
 
 def waterColor(img):
-    water_lower = np.array([90, 62, 10], np.uint8)
-    water_upper = np.array([155, 100, 65], np.uint8)
+    water_lower = np.array([90, 80, 1], np.uint8)
+    water_upper = np.array([254, 160, 130], np.uint8)
     result = Color(water_lower, water_upper, img)
     return result
 
@@ -103,8 +103,8 @@ def RtowerColor(img):
     return result
 
 def BColor(img):
-    Blue_lower = np.array([104, 108, 101], np.uint8)
-    Blue_upper = np.array([104, 108, 101], np.uint8)
+    Blue_lower = np.array([130, 135, 120], np.uint8)
+    Blue_upper = np.array([145, 150, 135], np.uint8)
     result = Color(Blue_lower, Blue_upper, img)
     return result
 
@@ -127,8 +127,8 @@ def GtowerColor(img):
     return result
 
 def YColor(img):
-    Yellow_lower = np.array([81, 131, 132], np.uint8)
-    Yellow_upper = np.array([81, 131, 132], np.uint8)
+    Yellow_lower = np.array([85, 195, 195], np.uint8)
+    Yellow_upper = np.array([100, 210, 210], np.uint8)
     result = Color(Yellow_lower, Yellow_upper, img)
     return result
 
@@ -197,11 +197,19 @@ def check_color(img):
                 elif biggestValue == 2:
                     result = "should be forrest"
                 elif biggestValue == 3:
+                    result = "should be desert"
+
+            case "desert forrest plain ":
+                if biggestValue == 1:
+                    result = "should be blue"
+                elif biggestValue == 2:
+                    result = "should be plain"
+                elif biggestValue == 3:
                     result = "should be red"
 
             case "mine forrest ":
                 if biggestValue == 1:
-                    result = "idk blue"
+                    result = "should be blue"
                 elif biggestValue == 2:
                     result = "should be forrest"
                 elif biggestValue == 3:
@@ -209,11 +217,43 @@ def check_color(img):
 
             case "desert mine ":
                 if biggestValue == 1:
-                    result = "idk blue"
+                    result = "should be blue"
                 elif biggestValue == 2:
                     result = "should be green"
                 elif biggestValue == 3:
+                    result = "should be red"
+
+            case "forrest plain ":
+                if biggestValue == 1:
+                    result = "idk blue"
+                elif biggestValue == 2:
+                    result = "should be plain"
+                elif biggestValue == 3:
                     result = "idk red"
+
+            case "desert forrest ":
+                if biggestValue == 1:
+                    result = "should be blue"
+                elif biggestValue == 2:
+                    result = "should be forrest"
+                elif biggestValue == 3:
+                    result = "should be desert"
+
+            case "field plain ":
+                if biggestValue == 1:
+                    result = "should be blue"
+                elif biggestValue == 2:
+                    result = "should be plain"
+                elif biggestValue == 3:
+                    result = "should be field"
+
+            case "desert plain ":
+                if biggestValue == 1:
+                    result = "should be blue"
+                elif biggestValue == 2:
+                    result = "should be plain"
+                elif biggestValue == 3:
+                    result = "should be desert"
 
     return PrintText, matchesFound, result
 

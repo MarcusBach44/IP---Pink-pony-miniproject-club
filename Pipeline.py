@@ -4,7 +4,7 @@ from find_crowns import find_crowns
 from seperateSquares import SeperatesTiles
 import blurPicturesAndFindColors as color
 
-img = cv2.imread("./Cropped and perspective corrected boards/3.jpg")
+img = cv2.imread("./Cropped and perspective corrected boards/1.jpg")
 templateCrown = cv2.imread('./Crown Images/crown4.jpg')
 
 #Separate Tiles into a list, going from 0-24
