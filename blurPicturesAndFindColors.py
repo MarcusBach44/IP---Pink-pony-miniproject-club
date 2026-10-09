@@ -4,9 +4,6 @@ import numpy as np
 import cv2
 from sympy import true
 
-
-#img = cv2.imread("./Game pieces/Mine.png")
-
 def find_avg_color(img):
     avrColorByRow = np.average(img, axis=0)
     avrColor = np.average(avrColorByRow, axis=0)
@@ -166,8 +163,10 @@ def FindBiggestChange(img, newImg):
 
     return bigVal
 
+
+
+
 def check_color(img):
-    PrintText = "Amount of matches based on color code: "
     matchesFound = 0
     num = 0
     newImg = brightenImg(img)
@@ -184,8 +183,6 @@ def check_color(img):
             matchesFound = matchesFound + 1
             matches = matches + aName[num]
         num = num + 1
-
-    print(matches)
 
     if matchesFound > 1:
         biggestValue = FindBiggestChange(img, newImg)
@@ -255,61 +252,4 @@ def check_color(img):
                 elif biggestValue == 3:
                     result = "should be desert"
 
-    return PrintText, matchesFound, result
-
-#def findArea(matchAmount, matchNames):
-    matches = matchAmount
-    names = matchNames
-    result = ""
-
-    match matches:
-        case "desert mine forest ":
-            result = "one"
-        case "mine forest ":
-            result = "two"
-    return result
-
-"""def check_color(img):
-    print(find_avg_color(img))
-    result = ""
-
-    if desertColor(img):
-        result = result + "desert "
-    elif mineColor(img):
-        result = result + "mine "
-    elif fieldColor(img):
-        result = result + "field "
-    elif forrestColor(img):
-        result = result + "forrest "
-    elif plainColor(img):
-        result = result + "plain "
-    elif waterColor(img):
-        result = result + "water "
-    elif RColor(img):
-        result = "red "
-    elif RtowerColor(img):
-        result = "redT "
-    elif BColor(img):
-        result = "blue "
-    elif BtowerColor(img):
-        result = "blueT "
-    elif GColor(img):
-        result = "green "
-    elif GtowerColor(img):
-        result = "greenT "
-    elif YColor(img):
-        result = "yellow "
-    elif YtowerColor(img):
-        result = "yellowT "
-    else:
-        result = "no match"
-
-
-    return result"""
-
-#check_color(img)
-#FindBiggestChange(img)
-#print(check_color(img))
-
-#print(find_avg_color(img))
-#print(FindBiggestChange(img))
+    return matchesFound, matches, result

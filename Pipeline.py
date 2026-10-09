@@ -14,12 +14,13 @@ tiles = SeperatesTiles(img)
 #going from 0-24 matching the tiles list
 tilesCrownCount = []
 for tile in tiles:
-    #tilesCrownCount.append(find_crowns(tile, templateCrown))
+    tilesCrownCount.append(find_crowns(tile, templateCrown))
     cv2.imshow("tile", tile)
     print(color.check_color(tile))
-    print("\n")
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+
+
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
 
 #Looks through all tiles to find groups, separates each group into a list
 
