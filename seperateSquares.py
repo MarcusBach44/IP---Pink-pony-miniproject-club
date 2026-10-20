@@ -17,7 +17,5 @@ def SeperatesTiles(img):
             columnDivision = columnDivision + fifthWidth
             tile = img[rowDivision - fifthHeight:rowDivision , columnDivision - fifthWidth:columnDivision]
             tiles.append(tile)
-            #cv2.imshow("img", tile)
-            #cv2.waitKey(0)
 
     return tiles
