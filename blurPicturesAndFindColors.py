@@ -188,81 +188,81 @@ def check_color(img):
 
     match matches:
         case "desert ":
-            result = "desert "
+            result = "desert"
         case "mine ":
-            result = "mine "
+            result = "mine"
         case "field ":
-            result = "field "
+            result = "field"
         case "forrest ":
-            result = "forrest "
+            result = "forrest"
         case "plain ":
-            result = "plain "
+            result = "plain"
         case "water ":
-            result = "water "
+            result = "water"
 
 
         case "desert mine forrest ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "forrest "
+                result = "forrest"
             elif biggestValue == 3:
-                result = "desert "
+                result = "desert"
 
         case "desert forrest plain ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "plain "
+                result = "plain"
             elif biggestValue == 3:
-                result = "red "
+                result = "red"
 
         case "mine forrest ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "forrest "
+                result = "forrest"
             elif biggestValue == 3:
-                result = "mine "
+                result = "mine"
 
         case "desert mine ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "green "
+                result = "green"
             elif biggestValue == 3:
-                result = "red "
+                result = "red"
 
         case "forrest plain ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "plain "
+                result = "plain"
             elif biggestValue == 3:
-                result = "red "
+                result = "red"
 
         case "desert forrest ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "forrest "
+                result = "forrest"
             elif biggestValue == 3:
-                result = "desert "
+                result = "desert"
 
         case "field plain ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "plain "
+                result = "plain"
             elif biggestValue == 3:
-                result = "field "
+                result = "field"
 
         case "desert plain ":
             if biggestValue == 1:
-                result = "blue "
+                result = "blue"
             elif biggestValue == 2:
-                result = "plain "
+                result = "plain"
             elif biggestValue == 3:
-                result = "desert "
+                result = "desert"
 
     return result
