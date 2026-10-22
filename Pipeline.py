@@ -1,44 +1,42 @@
 import cv2
 
-from find_crowns import find_crowns
+from find_crowns import find_crowns_in_group
 from seperateSquares import SeperatesTiles
-import groupTiles as groupTiles
-import blurPicturesAndFindColors as color
+from blurPicturesAndFindColors import define_tiles
+from groupTiles import grass_fire_algorithm
 
 img = cv2.imread("./Cropped and perspective corrected boards/1.jpg")
 templateCrown = cv2.imread('./Crown Images/crown4.jpg')
-
-ListOfAreas = []
+totalPoints = 0
 
 #Separate Tiles into a list, going from 0-24
 tiles = SeperatesTiles(img)
-tileNumber = 0
-groupTiles.possibleTiles()
+#print(tiles.__len__())
 
-#Looks through each tile for crowns, the stores each tile's amount of crowns in a list,
-#going from 0-24 matching the tiles list
-tilesCrownCount = []
-for tile in tiles:
-    tileNumber += 1
-    # Looks through all tiles to find crowns
-    tilesCrownCount.append(find_crowns(tile, templateCrown))
+#Assign each tile its type
+listOfAreas = define_tiles(tiles)
+#print(listOfAreas)
 
-    # Defines tile area
-    ListOfAreas.append(color.check_color(tile))
+#Create lists with each grouping of tiles
+listOfGroups = grass_fire_algorithm(listOfAreas)
+#print(listOfGroups)
 
-
-
-
-
+#Find crowns in each grouping and calculate points
+for group in listOfGroups:
+    amountOfCrowns = find_crowns_in_group(group, tiles, templateCrown)
+    totalPoints += amountOfCrowns * len(group)
+    #print("group: ",group,"" " = Crowns: ", amountOfCrowns, "*", " Size: ",len(group)," = ", totalPoints)
+print(totalPoints)
 
 
 
-    """area = color.check_color(tile)
+
+"""area = color.check_color(tile)
     areaAndNumber = area + str(tileNumber) + " "
     listHolder.append(list([areaAndNumber]))"""
 
-    # Looks through all tiles to find groups, separates each group into a list
-    """listHolder.append(groupTiles.CheckNeighbors(tileNumber, tiles, area, areaAndNumber))
+#Looks through all tiles to find groups, separates each group into a list
+"""listHolder.append(groupTiles.CheckNeighbors(tileNumber, tiles, area, areaAndNumber))
 
     # Show tile
     cv2.imshow("tile", tile)
@@ -47,4 +45,4 @@ for tile in tiles:
 
 groupTiles.NewCheck(listHolder)"""
 
-print (ListOfAreas)
+#print (ListOfAreas)

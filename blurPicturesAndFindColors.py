@@ -3,7 +3,6 @@ from xml.etree.ElementTree import tostring
 
 import numpy as np
 import cv2
-from sympy import true
 
 def find_avg_color(img):
     avrColorByRow = np.average(img, axis=0)
@@ -266,3 +265,10 @@ def check_color(img):
                 result = "desert"
 
     return result
+
+def define_tiles(tiles):
+    ListOfAreas = []
+    for tile in tiles:
+        ListOfAreas.append(check_color(tile))
+
+    return ListOfAreas

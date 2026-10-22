@@ -26,10 +26,10 @@ def convert_array_grayscale(img_array):
     return new_array
 
 
-def find_crowns(img, crowns):
+def find_crowns(img, crownTemplate):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    cv2.imshow("Crowns", img_gray)
-    template_array_grayscale = convert_array_grayscale(create_template_array(crowns))
+    #cv2.imshow("Crowns", img_gray)
+    template_array_grayscale = convert_array_grayscale(create_template_array(crownTemplate))
     amount_of_crowns = 0
     previous_crown = (-1, -1)
     previous_crowns2 = (-1, -1)
@@ -55,8 +55,8 @@ def find_crowns(img, crowns):
 
                 img = cv2.rectangle(img, pt, (pt[0] + w, pt[1]+h), (0, 255, 0), 2)
                 amount_of_crowns += 1
-                print("Previous Crown Pos: ",previous_crown[0], previous_crown[1], " New Crown Pos: ", pt[0], pt[1])
-                print("Size of crown", w, h)
+                #print("Previous Crown Pos: ",previous_crown[0], previous_crown[1], " New Crown Pos: ", pt[0], pt[1])
+                #print("Size of crown", w, h)
                 previous_crowns2 = previous_crown
                 previous_crown = pt
 
@@ -65,6 +65,14 @@ def find_crowns(img, crowns):
                 #cv2.waitKey(0)
 
     return amount_of_crowns
+
+def find_crowns_in_group(group, tiles, template):
+    amount_of_crowns = 0
+    for tileIndex in group:
+        img = tiles[tileIndex]
+        amount_of_crowns += find_crowns(img, template)
+    return amount_of_crowns
+
 
 """
 tiles = SeperatesTiles(image)
