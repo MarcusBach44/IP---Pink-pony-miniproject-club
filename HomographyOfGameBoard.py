@@ -198,12 +198,13 @@ cv2.waitKey(0)"""
 
 ####################################
 
+OriginalImg = cv2.imread("./Full game areas/Single Board Area/OneBoard1.png")
 img = cv2.imread("./Full game areas/Single Board Area/OneBoard1.png")
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 kernel = np.ones((1, 1), np.uint64)
 
 gray = cv2.bilateralFilter(gray, 13, 17, 3)
-median = cv2.medianBlur(gray, 27)
+median = cv2.medianBlur(gray, 37)
 blur = cv2.GaussianBlur(median, (47, 47), 1)
 img_dilation = cv2.dilate(blur, kernel, iterations=3)
 edged = cv2.Canny(img_dilation, 17, 17)
@@ -215,10 +216,10 @@ edged2 = edged
 edged3 = edged
 edged4 = edged
 
-line1 = cv2.HoughLines(edged1,1,np.pi/30,159)
-line2 = cv2.HoughLines(edged2,1,np.pi/300,159)
-line3 = cv2.HoughLines(edged3,1,np.pi/200,159)
-line4 = cv2.HoughLines(edged4,1,np.pi/80,159)
+line1 = cv2.HoughLines(edged1,1,np.pi/30,1)
+line2 = cv2.HoughLines(edged2,1,np.pi/500,1)
+line3 = cv2.HoughLines(edged3,1,np.pi/200,1)
+line4 = cv2.HoughLines(edged4,1,np.pi/80,1)
 Lines = [line1, line2, line3, line4]
 
 for line in Lines:
@@ -232,14 +233,20 @@ for line in Lines:
         x2 = int(x0 - 1000 * (-b))
         y2 = int(y0 - 1000 * (a))
 
-        Newimg = cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+        Newimg = cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 5)
 
-cv2.imshow("Game Boy Screen", Newimg)
+retval, threshold = cv2.threshold(Newimg, 12, 255, cv2.THRESH_BINARY)
+
+cv2.imshow("Game Boy Screen", edged)
+cv2.waitKey(0)
+cv2.imshow("Game Boy Screen", threshold)
 cv2.waitKey(0)
 
-"""NewimgGray = cv2.cvtColor(Newimg, cv2.COLOR_BGR2GRAY)
+Newedged = cv2.Canny(threshold, 17, 17)
+cv2.imshow("Game Boy Screen", Newedged)
+cv2.waitKey(0)
 
-cnts = cv2.findContours(NewimgGray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+cnts = cv2.findContours(Newedged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
 cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
 screenCnt = None
@@ -255,7 +262,7 @@ for c in cnts:
 		screenCnt = approx
 		break
 
-cv2.drawContours(Newimg, [cnts], -1, (0, 255, 0), 3)
+cv2.drawContours(OriginalImg, [screenCnt], -1, (0, 255, 0), 3)
 
-cv2.imshow("Game Boy Screen", img)
-cv2.waitKey(0)"""
+cv2.imshow("Game Boy Screen", OriginalImg)
+cv2.waitKey(0)
