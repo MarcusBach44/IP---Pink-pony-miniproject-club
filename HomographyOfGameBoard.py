@@ -237,11 +237,11 @@ for line in Lines:
 cv2.imshow("Game Boy Screen", Newimg)
 cv2.waitKey(0)
 
-NewimgGray = cv2.cvtColor(Newimg, cv2.COLOR_BGR2GRAY)
+"""NewimgGray = cv2.cvtColor(Newimg, cv2.COLOR_BGR2GRAY)
 
 cnts = cv2.findContours(NewimgGray, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
-"""cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
+cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:10]
 screenCnt = None
 
 # loop over our contours
@@ -253,9 +253,9 @@ for c in cnts:
 	# we can assume that we have found our screen
 	if len(approx) == 4:
 		screenCnt = approx
-		break"""
+		break
 
 cv2.drawContours(Newimg, [cnts], -1, (0, 255, 0), 3)
 
 cv2.imshow("Game Boy Screen", img)
-cv2.waitKey(0)
+cv2.waitKey(0)"""
