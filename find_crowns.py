@@ -1,15 +1,6 @@
 import cv2
 import numpy as np
 
-from seperateSquares import SeperatesTiles
-
-#image = cv2.imread("./Cropped and perspective corrected boards/14.jpg")
-#cv2.imshow("Original", image)
-
-#crown_img = cv2.imread("Crown Images/crown4.jpg")
-
-#cv2.imshow("Crown", crown_img)
-
 def create_template_array(template):
     template_array = [
         template,
@@ -72,14 +63,3 @@ def find_crowns_in_group(group, tiles, template):
         img = tiles[tileIndex]
         amount_of_crowns += find_crowns(img, template)
     return amount_of_crowns
-
-
-"""
-tiles = SeperatesTiles(image)
-
-amount_of_crowns = find_crowns(image, create_template_array(crown_img))
-print("Amount of Crowns: ", amount_of_crowns)
-cv2.imshow("Crowns on board", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-"""

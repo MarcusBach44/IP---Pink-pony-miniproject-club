@@ -27,22 +27,3 @@ for group in listOfGroups:
     totalPoints += amountOfCrowns * len(group)
     #print("group: ",group,"" " = Crowns: ", amountOfCrowns, "*", " Size: ",len(group)," = ", totalPoints)
 print(totalPoints)
-
-
-
-
-"""area = color.check_color(tile)
-    areaAndNumber = area + str(tileNumber) + " "
-    listHolder.append(list([areaAndNumber]))"""
-
-#Looks through all tiles to find groups, separates each group into a list
-"""listHolder.append(groupTiles.CheckNeighbors(tileNumber, tiles, area, areaAndNumber))
-
-    # Show tile
-    cv2.imshow("tile", tile)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-groupTiles.NewCheck(listHolder)"""
-
-#print (ListOfAreas)

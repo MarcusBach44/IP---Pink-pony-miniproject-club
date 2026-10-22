@@ -49,10 +49,10 @@ def grass_fire_algorithm(tiles):
     burnedTiles = []
 
     for currentTileIndex in range(len(tiles)):
-        currentGroup = []
         #Add matching tiles to burnQueue
         currentGroup, burnedTiles = burnTiles(tiles, currentTileIndex, burnedTiles)
-        ListOfGroups.append(currentGroup)
+        if not currentGroup == []:
+            ListOfGroups.append(currentGroup)
 
     return ListOfGroups
 
