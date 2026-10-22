@@ -1,7 +1,7 @@
 import numpy as np
-import cv2
-from networkx.algorithms import hierarchy
+import argparse
 import imutils
+import cv2
 
 """
 img = cv2.imread("./Full game areas/Single Board Area/OneBoard1.png")
@@ -194,33 +194,86 @@ for c in cnts:
         
 cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 3) 
 cv2.imshow("Game Boy Screen", image) 
-cv2.waitKey(0)"""
+cv2.waitKey(0)
+
+pts = screenCnt.reshape(4, 2)
+rect = np.zeros((4, 2), dtype = "float32")
+
+s = pts.sum(axis = 1)
+rect[0] = pts[np.argmin(s)]
+rect[2] = pts[np.argmax(s)]
+
+diff = np.diff(pts, axis = 1)
+rect[1] = pts[np.argmin(diff)]
+rect[3] = pts[np.argmax(diff)]
+
+rect *= ratio
+
+# now that we have our rectangle of points, let's compute
+# the width of our new image
+(tl, tr, br, bl) = rect
+widthA = np.sqrt(((br[0] - bl[0]) ** 2) + ((br[1] - bl[1]) ** 2))
+widthB = np.sqrt(((tr[0] - tl[0]) ** 2) + ((tr[1] - tl[1]) ** 2))
+
+# ...and now for the height of our new image
+heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
+heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
+
+# take the maximum of the width and height values to reach
+# our final dimensions
+maxWidth = max(int(widthA), int(widthB))
+maxHeight = max(int(heightA), int(heightB))
+
+# construct our destination points which will be used to
+# map the screen to a top-down, "birds eye" view
+dst = np.array([
+	[0, 0],
+	[maxWidth - 1, 0],
+	[maxWidth - 1, maxHeight - 1],
+	[0, maxHeight - 1]], dtype = "float32")
+	
+# calculate the perspective transform matrix and warp
+# the perspective to grab the screen
+M = cv2.getPerspectiveTransform(rect, dst)
+warp = cv2.warpPerspective(orig, M, (maxWidth, maxHeight))
+"""
 
 ####################################
 
 OriginalImg = cv2.imread("./Full game areas/Single Board Area/OneBoard1.png")
+whiteImg = cv2.imread("./Full game areas/Single Board Area/OneBoard1.png")
+whiteImg = cv2.cvtColor(whiteImg, cv2.COLOR_BGR2GRAY)
+whiteImg = cv2.convertScaleAbs(whiteImg, alpha=30, beta=70)
+
+height, width, channels = OriginalImg.shape
+
 img = cv2.imread("./Full game areas/Single Board Area/OneBoard1.png")
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+cvtImg = cv2.convertScaleAbs(img, alpha=1.3, beta=5)
+gray = cv2.cvtColor(cvtImg, cv2.COLOR_BGR2GRAY)
 kernel = np.ones((1, 1), np.uint64)
+
+"""cv2.imshow("Game Boy Screen", gray)
+cv2.waitKey(0)"""
 
 gray = cv2.bilateralFilter(gray, 13, 17, 3)
 median = cv2.medianBlur(gray, 37)
 blur = cv2.GaussianBlur(median, (47, 47), 1)
 img_dilation = cv2.dilate(blur, kernel, iterations=3)
 edged = cv2.Canny(img_dilation, 17, 17)
-#dst = cv2.cornerHarris(edged, 7, 7, 0.006)
-#dst = cv2.dilate(dst, None)
+
+"""cv2.imshow("Game Boy Screen", edged)
+cv2.waitKey(0)"""
 
 edged1 = edged
 edged2 = edged
 edged3 = edged
 edged4 = edged
 
-line1 = cv2.HoughLines(edged1,1,np.pi/30,1)
-line2 = cv2.HoughLines(edged2,1,np.pi/500,1)
+lineRight = cv2.HoughLines(edged1,1,np.pi/30,1)
+lineTop = cv2.HoughLines(edged2,1,np.pi/500,1)
 line3 = cv2.HoughLines(edged3,1,np.pi/200,1)
-line4 = cv2.HoughLines(edged4,1,np.pi/80,1)
-Lines = [line1, line2, line3, line4]
+lineBottom = cv2.HoughLines(edged4,1,np.pi/80,1)
+Lines = [lineRight, lineTop, line3, lineBottom]
 
 for line in Lines:
     for rho, theta in line[0]:
@@ -235,16 +288,14 @@ for line in Lines:
 
         Newimg = cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 5)
 
-retval, threshold = cv2.threshold(Newimg, 12, 255, cv2.THRESH_BINARY)
+"""cv2.imshow("Game Boy Screen", Newimg)
+cv2.waitKey(0)"""
 
-cv2.imshow("Game Boy Screen", edged)
-cv2.waitKey(0)
-cv2.imshow("Game Boy Screen", threshold)
-cv2.waitKey(0)
-
+rawr, threshold = cv2.threshold(Newimg, 12, 255, cv2.THRESH_BINARY)
 Newedged = cv2.Canny(threshold, 17, 17)
-cv2.imshow("Game Boy Screen", Newedged)
-cv2.waitKey(0)
+
+"""cv2.imshow("Game Boy Screen", Newedged)
+cv2.waitKey(0)"""
 
 cnts = cv2.findContours(Newedged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
@@ -262,7 +313,47 @@ for c in cnts:
 		screenCnt = approx
 		break
 
-cv2.drawContours(OriginalImg, [screenCnt], -1, (0, 255, 0), 3)
+cv2.drawContours(whiteImg, [screenCnt], -1, (0, 255, 0), 3)
 
+"""cv2.imshow("Game Boy Screen", whiteImg)
+cv2.waitKey(0)"""
+
+corners = cv2.goodFeaturesToTrack(whiteImg, 4, 0.1, 10)
+corners = np.int16(corners)
+cornersArr = []
+
+for i in corners:
+    x, y = i.ravel()
+    cv2.circle(OriginalImg, (x, y), 5, 255, -1)
+    cornersArr.append(x)
+    cornersArr.append(y)
+
+print(cornersArr)
 cv2.imshow("Game Boy Screen", OriginalImg)
 cv2.waitKey(0)
+
+topleftX = int(cornersArr[1])
+topleftY = int(cornersArr[0])
+
+toprightX = int(cornersArr[3])
+toprightY = int(cornersArr[2])
+
+bottomleftX = int(cornersArr[5])
+bottomleftY = int(cornersArr[4])
+
+bottomRightX = int(cornersArr[7])
+bottomRightY = int(cornersArr[6])
+
+original_points = np.array([[topleftY, topleftX], [bottomleftY, bottomleftX], [bottomRightY, bottomRightX], [toprightY, toprightX]], dtype=np.float32)
+target_points = np.array([[0, 0], [0, height], [width, height], [width, 0]], dtype=np.float32)
+
+mat = cv2.getPerspectiveTransform(original_points, target_points)
+perspective_image = cv2.warpPerspective(OriginalImg, mat, (width, height))
+
+cv2.imshow("Game Boy Screen", perspective_image)
+cv2.waitKey(0)
+
+
+
+
+
