@@ -29,7 +29,7 @@ def find_crowns(img, crownTemplate):
         w, h = template.shape[::-1]
 
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-        threshold = 0.6
+        threshold = 0.7
         loc = np.where(res >= threshold)
         #cv2.destroyAllWindows()
         #cv2.imshow("Crowns", template)
@@ -54,9 +54,9 @@ def find_crowns(img, crownTemplate):
                 previous_crowns2 = previous_crown
                 previous_crown = pt
 
-                #cv2.imshow("Crowns", template)
-                #cv2.imshow("image", img)
-                #cv2.waitKey(0)
+                cv2.imshow("Crowns", template)
+                cv2.imshow("image", img)
+                cv2.waitKey(0)
 
         if match_found:
             break
