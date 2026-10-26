@@ -37,7 +37,7 @@ def pipeline_scale_board():
 
 #Here is the pipeline, which can be used for ALREADY scaled images of game boards
 def pipeline():
-    img = cv2.imread("./Cropped and perspective corrected boards/2.jpg")
+    img = cv2.imread("./Cropped and perspective corrected boards/9.jpg")
     templateCrown1 = cv2.imread('./Crown Images/crown4.jpg')
     templateCrowns = [templateCrown1]
     totalPoints = 0
@@ -47,6 +47,7 @@ def pipeline():
 
     # Assign each tile its type
     listOfAreas = define_tiles(tiles)
+    print(listOfAreas)
 
     # Create lists with each grouping of tiles
     listOfGroups = grass_fire_algorithm(listOfAreas)
@@ -59,5 +60,5 @@ def pipeline():
 
 #######################################
 
-pipeline_scale_board()
-#pipeline()
+#pipeline_scale_board()
+pipeline()

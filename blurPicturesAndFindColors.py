@@ -123,49 +123,49 @@ def waterColor(img):
     return result
 
 def RColor(img):
-    Red_lower = np.array([79, 96, 118], np.uint8)
-    Red_upper = np.array([79, 96, 118], np.uint8)
+    Red_lower = np.array([90, 135, 145], np.uint8)
+    Red_upper = np.array([110, 150, 165], np.uint8)
     result = Color(Red_lower, Red_upper, img)
     return result
 
 def RtowerColor(img):
-    towerRed_lower = np.array([46, 60, 76], np.uint8)
-    towerRed_upper = np.array([46, 60, 76], np.uint8)
+    towerRed_lower = np.array([40, 70, 80], np.uint8)
+    towerRed_upper = np.array([50, 94, 105], np.uint8)
     result = Color(towerRed_lower, towerRed_upper, img)
     return result
 
 def BColor(img):
     Blue_lower = np.array([130, 135, 120], np.uint8)
-    Blue_upper = np.array([145, 150, 135], np.uint8)
+    Blue_upper = np.array([145, 160, 145], np.uint8)
     result = Color(Blue_lower, Blue_upper, img)
     return result
 
 def BtowerColor(img):
-    towerBlue_lower = np.array([63, 70, 67], np.uint8)
-    towerBlue_upper = np.array([63, 70, 67], np.uint8)
+    towerBlue_lower = np.array([88, 110, 105], np.uint8)
+    towerBlue_upper = np.array([98, 125, 115], np.uint8)
     result = Color(towerBlue_lower, towerBlue_upper, img)
     return result
 
 def GColor(img):
-    Green_lower = np.array([95, 118, 111], np.uint8)
-    Green_upper = np.array([95, 118, 111], np.uint8)
+    Green_lower = np.array([70, 130, 125], np.uint8)
+    Green_upper = np.array([90, 150, 145], np.uint8)
     result = Color(Green_lower, Green_upper, img)
     return result
 
 def GtowerColor(img):
-    towerGreen_lower = np.array([50, 64, 58], np.uint8)
-    towerGreen_upper = np.array([50, 64, 58], np.uint8)
+    towerGreen_lower = np.array([30, 88, 75], np.uint8)
+    towerGreen_upper = np.array([40, 95, 90], np.uint8)
     result = Color(towerGreen_lower, towerGreen_upper, img)
     return result
 
 def YColor(img):
-    Yellow_lower = np.array([85, 195, 195], np.uint8)
-    Yellow_upper = np.array([100, 210, 210], np.uint8)
+    Yellow_lower = np.array([85, 180, 180], np.uint8)
+    Yellow_upper = np.array([105, 210, 210], np.uint8)
     result = Color(Yellow_lower, Yellow_upper, img)
     return result
 
 def YtowerColor(img):
-    towerYellow_lower = np.array([70, 140, 140], np.uint8)
+    towerYellow_lower = np.array([70, 95, 95], np.uint8)
     towerYellow_upper = np.array([100, 160, 160], np.uint8)
     result = Color(towerYellow_lower, towerYellow_upper, img)
     return result
@@ -212,6 +212,22 @@ def check_color(img):
         case "water ":
             result = "water"
 
+        case "Blue ":
+            result = "crown"
+        case "Bluetower ":
+            result = "crown"
+        case "Green ":
+            result = "crown"
+        case "Greentower ":
+            result = "crown"
+        case "Yellow ":
+            result = "crown"
+        case "Yellowtower ":
+            result = "crown"
+        case "Red ":
+            result = "crown"
+        case "Redtower ":
+            result = "crown"
 
         case "desert mine forrest ":
             if biggestValue == 1:
@@ -310,16 +326,25 @@ def check_color(img):
                 result = "red"
                 print("desert plain Yellow - no type")
 
-        case "desert plain Greentower ":
+        case "desert Yellow ":
             if biggestValue == 1:
                 result = "blue"
-                print("desert plain Greentower - no type")
+                print("desert plain Yellow - no type")
             elif biggestValue == 2:
-                result = "green"
-                print("desert plain Greentower - no type")
+                result = "crown"
             elif biggestValue == 3:
                 result = "red"
-                print("desert plain Greentower - no type")
+                print("desert Yellow - no type")
+
+        case "mine forrest Greentower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("mine forrest Greentower - no type")
+            elif biggestValue == 2:
+                result = "crown"
+            elif biggestValue == 3:
+                result = "red"
+                print("mine forrest Greentower - no type")
 
         case "desert plain Green ":
             if biggestValue == 1:
@@ -331,6 +356,16 @@ def check_color(img):
             elif biggestValue == 3:
                 result = "red"
                 print("desert plain Green - no type")
+
+        case "desert Green ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert Green - no type")
+            elif biggestValue == 2:
+                result = "crown"
+            elif biggestValue == 3:
+                result = "red"
+                print("desert Green - no type")
 
         case "desert plain Bluetower ":
             if biggestValue == 1:
@@ -354,27 +389,83 @@ def check_color(img):
                 result = "red"
                 print("desert plain Blue - no type")
 
-        case "desert plain Redtower ":
+        case "mine forrest Redtower ":
             if biggestValue == 1:
                 result = "blue"
-                print("desert plain Redtower - no type")
+                print("mine forrest Redtower - no type")
             elif biggestValue == 2:
                 result = "green"
-                print("desert plain Redtower - no type")
+                print("mine forrest Redtower - no type")
             elif biggestValue == 3:
-                result = "red"
-                print("desert plain Redtower - no type")
+                result = "crown"
 
-        case "desert plain Red ":
+        case "desert Red ":
             if biggestValue == 1:
                 result = "blue"
-                print("desert plain Red - no type")
+                print("desert Red - no type")
             elif biggestValue == 2:
                 result = "green"
-                print("desert plain Red - no type")
+                print("desert Red - no type")
+            elif biggestValue == 3:
+                result = "crown"
+
+        case "desert Red Yellowtower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert Red Yellowtower - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert Red Yellowtower - no type")
+            elif biggestValue == 3:
+                result = "desert"
+
+        case "forrest Yellowtower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("forrest Yellowtower - no type")
+            elif biggestValue == 2:
+                result = "crown"
             elif biggestValue == 3:
                 result = "red"
-                print("desert plain Red - no type")
+                print("forrest Yellowtower - no type")
+
+        case "desert Green Yellowtower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert Green Yellowtower - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert Green Yellowtower - no type")
+            elif biggestValue == 3:
+                result = "desert"
+
+        case "desert field plain ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert field plain - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert Green Yellowtower - no type")
+            elif biggestValue == 3:
+                result = "desert"
+
+        case "desert water Bluetower Yellowtower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert water Bluetower Yellowtower  - no type")
+            elif biggestValue == 2:
+                result = "crown"
+            elif biggestValue == 3:
+                result = "red"
+                print("desert water Bluetower Yellowtower  - no type")
+
+
+    print(find_avg_color(newImg))
+    print(matches)
+    print(result)
+
+    cv2.imshow("tile", img)
+    cv2.waitKey(0)
 
     return result
 
