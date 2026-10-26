@@ -110,8 +110,3 @@ def ScaleBoardIsh(Img):
 
     #Return the warped image
     return perspective_image
-
-
-
-
-

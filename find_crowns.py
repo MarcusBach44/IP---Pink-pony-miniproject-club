@@ -21,7 +21,6 @@ def find_crowns(img, crownTemplates, threshold):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     template_array_grayscale = []
     for template in crownTemplates:
-        #print(template)
         for temp in convert_array_grayscale(create_template_array(template)):
             template_array_grayscale.append(temp)
     amount_of_crowns = 0
@@ -33,12 +32,7 @@ def find_crowns(img, crownTemplates, threshold):
         w, h = template.shape[::-1]
 
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-        #threshold = 0.78
         loc = np.where(res >= threshold)
-        #cv2.destroyAllWindows()
-        #cv2.imshow("Crowns", template)
-        #cv2.imshow("image", img)
-        #cv2.waitKey(0)
 
         for pt in zip(*loc[::-1]):
             if ((pt[0] < previous_crown[0] and
@@ -53,18 +47,12 @@ def find_crowns(img, crownTemplates, threshold):
                 match_found = True
                 img = cv2.rectangle(img, pt, (pt[0] + w, pt[1]+h), (0, 255, 0), 2)
                 amount_of_crowns += 1
-                #print("Previous Crown Pos: ",previous_crown[0], previous_crown[1], " New Crown Pos: ", pt[0], pt[1])
-                #print("Size of crown", w, h)
                 previous_crowns2 = previous_crown
                 previous_crown = pt
 
-                """cv2.imshow("Crowns", template)
-                cv2.imshow("image", img)
-                cv2.waitKey(0)"""
 
         if match_found:
             break
-    #print("Amount of Crowns: ", amount_of_crowns)
     return amount_of_crowns
 
 def find_crowns_in_group(group, tiles, template, threshold):
@@ -73,11 +61,3 @@ def find_crowns_in_group(group, tiles, template, threshold):
         img = tiles[tileIndex]
         amount_of_crowns += find_crowns(img, template, threshold)
     return amount_of_crowns
-
-"""
-amount_of_crowns = find_crowns(image, create_template_array(crown_img))
-print("Amount of Crowns: ", amount_of_crowns)
-cv2.imshow("Crowns on board", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-"""
