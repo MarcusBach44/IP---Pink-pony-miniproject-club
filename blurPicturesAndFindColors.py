@@ -4,20 +4,26 @@ from xml.etree.ElementTree import tostring
 import numpy as np
 import cv2
 
-def find_avg_color(img):
-    avrColorByRow = np.average(img, axis=0)
-    avrColor = np.average(avrColorByRow, axis=0)
-    return avrColor
+#Brightens the image
+def brightenImg(img):
+    cvtImg = cv2.convertScaleAbs(img, alpha= 1.4, beta= 1)
+    return cvtImg
 
+#Blurs the image
 def manipulateImg(img):
     imgMedianBlur = cv2.medianBlur(img, 97)
     imgGaussianBlur = cv2.GaussianBlur(imgMedianBlur, (55, 55), 0)
     return imgGaussianBlur
 
-def brightenImg(img):
-    cvtImg = cv2.convertScaleAbs(img, alpha= 1.4, beta= 1)
-    return cvtImg
+#################################################
 
+#Finds the average colour code of the image
+def find_avg_color(img):
+    avrColorByRow = np.average(img, axis=0)
+    avrColor = np.average(avrColorByRow, axis=0)
+    return avrColor
+
+#Finds the colorcode of the image and determines if it is inside the defined spectrum or not
 def Color(lower, upper, img):
     color = np.array(find_avg_color(img))
     lower = lower
@@ -25,12 +31,43 @@ def Color(lower, upper, img):
     isColorTorF = isColor(lower, upper, color)
     return isColorTorF
 
+#Returns true, if the tile/colour code is inside of the spectrum in all 3 colours (blue, green, red)
 def isColor(lower, upper, avgColor):
     if lower[0] <= avgColor[0] <= upper[0] and lower[1] <= avgColor[1] <= upper[1] and lower[2] <= avgColor[2] <= upper[2]:
         return True
     else:
         return False
 
+#This finds the colour amoung red, green and blue which the biggest change has happened from original to manipulated img
+def FindBiggestChange(img, newImg):
+    B1 = find_avg_color(img)[0]
+    B2 = find_avg_color(newImg)[0]
+
+    G1 = find_avg_color(img)[0]
+    G2 = find_avg_color(newImg)[1]
+
+    R1 = find_avg_color(img)[0]
+    R2 = find_avg_color(newImg)[2]
+
+    B = B2 - B1
+    G = G2 - G1
+    R = R2 - R1
+
+    biggestValue = max(B, G, R)
+    bigVal = 0
+
+    if biggestValue == B:
+        bigVal = 1
+    if biggestValue == G:
+        bigVal = 2
+    if biggestValue == R:
+        bigVal = 3
+
+    return bigVal
+
+#################################################
+
+# A list which holds all of the methods for checking if the tile matches the area
 def areaFunctions(img):
     ColorFunctions = [desertColor(img), mineColor(img), fieldColor(img), forrestColor(img), plainColor(img),
                       waterColor(img),
@@ -40,6 +77,7 @@ def areaFunctions(img):
                       YColor(img), YtowerColor(img)]
     return ColorFunctions
 
+#the area names which will be returned whenever an area matches with a tile
 def areaNames():
     ColorAreas = ["desert ", "mine ", "field ", "forrest ", "plain ", "water ",
                   "Red ", "Redtower ",
@@ -50,7 +88,7 @@ def areaNames():
 
 #################################################
 
-# All the spectrum are based on the average colors (look at picture in report)
+# All the spectrums are based on the average colors, and was later broadened (look at picture in report)
 def desertColor(img):
     desert_lower = np.array([30, 90, 100], np.uint8)
     desert_upper = np.array([135, 190, 205], np.uint8)
@@ -137,52 +175,32 @@ def YtowerColor(img):
 
 #################################################
 
-def FindBiggestChange(img, newImg):
-    B1 = find_avg_color(img)[0]
-    B2 = find_avg_color(newImg)[0]
-
-    G1 = find_avg_color(img)[0]
-    G2 = find_avg_color(newImg)[1]
-
-    R1 = find_avg_color(img)[0]
-    R2 = find_avg_color(newImg)[2]
-
-    B = B2 - B1
-    G = G2 - G1
-    R = R2 - R1
-
-    biggestValue = max(B, G, R)
-    bigVal = 0
-
-    if biggestValue == B:
-        bigVal = 1
-    if biggestValue == G:
-        bigVal = 2
-    if biggestValue == R:
-        bigVal = 3
-
-    return bigVal
-
+#this is the main method
 def check_color(img):
     matchesFound = 0
     num = 0
 
+    # Here the image is brightened and blurred
     newImg = brightenImg(img)
     newImg = manipulateImg(newImg)
 
     aName = areaNames()
+    # The manipulated image is put through each area function to check if the colour code fits
     aFunc = areaFunctions(newImg)
     matches = ""
     result = ""
 
+    # If there is a match for an area and the current tile, then the amount of matches +1
     for function in aFunc:
         if function == True:
             matchesFound = matchesFound + 1
             matches = matches + aName[num]
         num = num + 1
 
+    #The program now checks which color has had the biggest difference (to help resolve a situation with multiple matches)
     biggestValue = FindBiggestChange(img, newImg)
 
+    # Now it looks through and decides which area it is based on the case and the value with the biggest difference
     match matches:
         case "desert ":
             result = "desert"
@@ -363,12 +381,11 @@ def check_color(img):
 
     return result
 
+#################################################
+
 def define_tiles(tiles):
     ListOfAreas = []
     for tile in tiles:
         ListOfAreas.append(check_color(tile))
-        """print(check_color(tile))
-        cv2.imshow("tile", tile)
-        cv2.waitKey(0)"""
 
     return ListOfAreas
