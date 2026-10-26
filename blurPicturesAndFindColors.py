@@ -333,8 +333,7 @@ def check_color(img):
             elif biggestValue == 2:
                 result = "crown"
             elif biggestValue == 3:
-                result = "red"
-                print("desert Yellow - no type")
+                result = "desert"
 
         case "mine forrest Greentower ":
             if biggestValue == 1:
@@ -434,8 +433,7 @@ def check_color(img):
                 result = "blue"
                 print("desert Green Yellowtower - no type")
             elif biggestValue == 2:
-                result = "green"
-                print("desert Green Yellowtower - no type")
+                result = "crown"
             elif biggestValue == 3:
                 result = "desert"
 
