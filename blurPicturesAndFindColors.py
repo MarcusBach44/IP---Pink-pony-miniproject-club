@@ -459,14 +459,6 @@ def check_color(img):
                 result = "red"
                 print("desert water Bluetower Yellowtower  - no type")
 
-
-    print(find_avg_color(newImg))
-    print(matches)
-    print(result)
-
-    cv2.imshow("tile", img)
-    cv2.waitKey(0)
-
     return result
 
 #################################################
