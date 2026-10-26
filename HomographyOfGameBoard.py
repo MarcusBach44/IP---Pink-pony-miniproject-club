@@ -352,8 +352,9 @@ def ScaleBoardIsh(Img):
     mat = cv2.getPerspectiveTransform(original_points, target_points)
     perspective_image = cv2.warpPerspective(OriginalImg, mat, (width, height))
 
-    """cv2.imshow("Game Boy Screen", perspective_image)
-    cv2.waitKey(0)"""
+    cv2.imshow("Game Boy Screen", perspective_image)
+    cv2.imwrite("Crown Images/test.png", perspective_image)
+    cv2.waitKey(0)
 
     return perspective_image
 
