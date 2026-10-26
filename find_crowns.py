@@ -17,10 +17,11 @@ def convert_array_grayscale(img_array):
     return new_array
 
 
-def find_crowns(img, crownTemplates):
+def find_crowns(img, crownTemplates, threshold):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     template_array_grayscale = []
     for template in crownTemplates:
+        print(template)
         for temp in convert_array_grayscale(create_template_array(template)):
             template_array_grayscale.append(temp)
     amount_of_crowns = 0
@@ -32,7 +33,7 @@ def find_crowns(img, crownTemplates):
         w, h = template.shape[::-1]
 
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-        threshold = 0.78
+        #threshold = 0.78
         loc = np.where(res >= threshold)
         #cv2.destroyAllWindows()
         #cv2.imshow("Crowns", template)
@@ -66,11 +67,11 @@ def find_crowns(img, crownTemplates):
     #print("Amount of Crowns: ", amount_of_crowns)
     return amount_of_crowns
 
-def find_crowns_in_group(group, tiles, template):
+def find_crowns_in_group(group, tiles, template, threshold):
     amount_of_crowns = 0
     for tileIndex in group:
         img = tiles[tileIndex]
-        amount_of_crowns += find_crowns(img, template)
+        amount_of_crowns += find_crowns(img, template, threshold)
     return amount_of_crowns
 
 """
