@@ -27,7 +27,6 @@ def pipeline_scale_board():
 
     # Create lists with each grouping of tiles
     listOfGroups = grass_fire_algorithm(listOfAreas)
-    print(listOfGroups)
 
     # Find crowns in each grouping and calculate points
     for group in listOfGroups:
@@ -43,11 +42,11 @@ def pipeline():
     templateCrowns = [templateCrown1]
     totalPoints = 0
 
+    # Separate Tiles into a list, going from 0-24
     tiles = SeperatesTiles(img)
 
     # Assign each tile its type
     listOfAreas = define_tiles(tiles)
-    print(listOfAreas)
 
     # Create lists with each grouping of tiles
     listOfGroups = grass_fire_algorithm(listOfAreas)
