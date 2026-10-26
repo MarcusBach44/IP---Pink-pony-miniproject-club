@@ -331,8 +331,8 @@ def ScaleBoardIsh(Img):
         cornersArr.append(y)
 
     print(cornersArr)
-    cv2.imshow("Game Boy Screen", OriginalImg)
-    cv2.waitKey(0)
+    """cv2.imshow("Game Boy Screen", OriginalImg)
+    cv2.waitKey(0)"""
 
     topleftX = int(cornersArr[1])
     topleftY = int(cornersArr[0])
@@ -352,8 +352,8 @@ def ScaleBoardIsh(Img):
     mat = cv2.getPerspectiveTransform(original_points, target_points)
     perspective_image = cv2.warpPerspective(OriginalImg, mat, (width, height))
 
-    cv2.imshow("Game Boy Screen", perspective_image)
-    cv2.waitKey(0)
+    """cv2.imshow("Game Boy Screen", perspective_image)
+    cv2.waitKey(0)"""
 
     return perspective_image
 

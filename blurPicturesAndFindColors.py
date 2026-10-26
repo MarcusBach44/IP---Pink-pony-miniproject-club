@@ -20,6 +20,7 @@ def brightenImg(img):
 
 def Color(lower, upper, img):
     color = np.array(find_avg_color(img))
+    print(color)
     lower = lower
     upper = upper
     isColorTorF = isColor(lower, upper, color)
@@ -58,14 +59,14 @@ def desertColor(img):
     return result
 
 def mineColor(img):
-    mine_lower = np.array([15, 50, 60], np.uint8)
+    mine_lower = np.array([15, 50, 50], np.uint8)
     mine_upper = np.array([70, 100, 130], np.uint8)
     result = Color(mine_lower, mine_upper, img)
     return result
 
 def fieldColor(img):
     field_lower = np.array([1, 160, 180], np.uint8)
-    field_upper = np.array([40, 255, 255], np.uint8)
+    field_upper = np.array([90, 255, 255], np.uint8)
     result = Color(field_lower, field_upper, img)
     return result
 
@@ -77,7 +78,7 @@ def forrestColor(img):
 
 def plainColor(img):
     plain_lower = np.array([10, 145, 105], np.uint8)
-    plain_upper = np.array([70, 240, 200], np.uint8)
+    plain_upper = np.array([94, 240, 200], np.uint8)
     result = Color(plain_lower, plain_upper, img)
     return result
 
@@ -130,8 +131,8 @@ def YColor(img):
     return result
 
 def YtowerColor(img):
-    towerYellow_lower = np.array([30, 58, 59], np.uint8)
-    towerYellow_upper = np.array([30, 58, 59], np.uint8)
+    towerYellow_lower = np.array([70, 140, 140], np.uint8)
+    towerYellow_upper = np.array([100, 160, 160], np.uint8)
     result = Color(towerYellow_lower, towerYellow_upper, img)
     return result
 
@@ -181,6 +182,7 @@ def check_color(img):
         if function == True:
             matchesFound = matchesFound + 1
             matches = matches + aName[num]
+            #print(matches)
         num = num + 1
 
     biggestValue = FindBiggestChange(img, newImg)
@@ -263,6 +265,13 @@ def check_color(img):
                 result = "plain"
             elif biggestValue == 3:
                 result = "desert"
+        case "desert plain Yellowtower ":
+            if biggestValue == 1:
+                result = "blue"
+            elif biggestValue == 2:
+                result = "plain"
+            elif biggestValue == 3:
+                result = "crown"
 
     return result
 
@@ -270,5 +279,8 @@ def define_tiles(tiles):
     ListOfAreas = []
     for tile in tiles:
         ListOfAreas.append(check_color(tile))
+        """print(check_color(tile))
+        cv2.imshow("tile", tile)
+        cv2.waitKey(0)"""
 
     return ListOfAreas
