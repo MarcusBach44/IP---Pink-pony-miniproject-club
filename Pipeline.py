@@ -24,7 +24,7 @@ def pipeline_scale_board():
 
     # Assign each tile its type
     listOfAreas = define_tiles(tiles)
-    print(listOfAreas)
+    #print(listOfAreas)
 
     # Create lists with each grouping of tiles
     listOfGroups = grass_fire_algorithm(listOfAreas)
@@ -62,5 +62,5 @@ def pipeline():
         # print("group: ",group,"" " = Crowns: ", amountOfCrowns, "*", " Size: ",len(group)," = ", totalPoints)
     print(totalPoints)
 
-#pipeline_scale_board()
-pipeline()
+pipeline_scale_board()
+#pipeline()

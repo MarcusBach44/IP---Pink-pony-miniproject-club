@@ -21,7 +21,7 @@ def find_crowns(img, crownTemplates, threshold):
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     template_array_grayscale = []
     for template in crownTemplates:
-        print(template)
+        #print(template)
         for temp in convert_array_grayscale(create_template_array(template)):
             template_array_grayscale.append(temp)
     amount_of_crowns = 0
@@ -58,9 +58,9 @@ def find_crowns(img, crownTemplates, threshold):
                 previous_crowns2 = previous_crown
                 previous_crown = pt
 
-                cv2.imshow("Crowns", template)
+                """cv2.imshow("Crowns", template)
                 cv2.imshow("image", img)
-                cv2.waitKey(0)
+                cv2.waitKey(0)"""
 
         if match_found:
             break

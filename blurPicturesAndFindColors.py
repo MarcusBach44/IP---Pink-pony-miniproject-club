@@ -20,7 +20,6 @@ def brightenImg(img):
 
 def Color(lower, upper, img):
     color = np.array(find_avg_color(img))
-    print(color)
     lower = lower
     upper = upper
     isColorTorF = isColor(lower, upper, color)
@@ -164,12 +163,10 @@ def FindBiggestChange(img, newImg):
 
     return bigVal
 
-
-
-
 def check_color(img):
     matchesFound = 0
     num = 0
+
     newImg = brightenImg(img)
     newImg = manipulateImg(newImg)
 
@@ -182,7 +179,6 @@ def check_color(img):
         if function == True:
             matchesFound = matchesFound + 1
             matches = matches + aName[num]
-            #print(matches)
         num = num + 1
 
     biggestValue = FindBiggestChange(img, newImg)
@@ -205,6 +201,7 @@ def check_color(img):
         case "desert mine forrest ":
             if biggestValue == 1:
                 result = "blue"
+                print("desert mine forrest - no type")
             elif biggestValue == 2:
                 result = "forrest"
             elif biggestValue == 3:
@@ -213,14 +210,17 @@ def check_color(img):
         case "desert forrest plain ":
             if biggestValue == 1:
                 result = "blue"
+                print("desert forrest plain - no type")
             elif biggestValue == 2:
                 result = "plain"
             elif biggestValue == 3:
                 result = "red"
+                print("desert forrest plain - no type")
 
         case "mine forrest ":
             if biggestValue == 1:
                 result = "blue"
+                print("mine forrest - no type")
             elif biggestValue == 2:
                 result = "forrest"
             elif biggestValue == 3:
@@ -229,22 +229,28 @@ def check_color(img):
         case "desert mine ":
             if biggestValue == 1:
                 result = "blue"
+                print("desert mine - no type")
             elif biggestValue == 2:
                 result = "green"
+                print("desert mine - no type")
             elif biggestValue == 3:
                 result = "red"
+                print("desert mine - no type")
 
         case "forrest plain ":
             if biggestValue == 1:
                 result = "blue"
+                print("forrest plain - no type")
             elif biggestValue == 2:
                 result = "plain"
             elif biggestValue == 3:
                 result = "red"
+                print("forrest plain - no type")
 
         case "desert forrest ":
             if biggestValue == 1:
                 result = "blue"
+                print("desert forrest - no type")
             elif biggestValue == 2:
                 result = "forrest"
             elif biggestValue == 3:
@@ -253,6 +259,7 @@ def check_color(img):
         case "field plain ":
             if biggestValue == 1:
                 result = "blue"
+                print("field plain - no type")
             elif biggestValue == 2:
                 result = "plain"
             elif biggestValue == 3:
@@ -261,17 +268,98 @@ def check_color(img):
         case "desert plain ":
             if biggestValue == 1:
                 result = "blue"
+                print("desert plain - no type")
             elif biggestValue == 2:
                 result = "plain"
             elif biggestValue == 3:
                 result = "desert"
+
         case "desert plain Yellowtower ":
             if biggestValue == 1:
                 result = "blue"
+                print("desert plain Yellowtower - no type")
             elif biggestValue == 2:
-                result = "plain"
+                result = "green"
+                print("desert plain Yellowtower - no type")
             elif biggestValue == 3:
                 result = "crown"
+
+        case "desert plain Yellow ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Yellow - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Yellow - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Yellow - no type")
+
+        case "desert plain Greentower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Greentower - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Greentower - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Greentower - no type")
+
+        case "desert plain Green ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Green - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Green - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Green - no type")
+
+        case "desert plain Bluetower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Bluetower - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Bluetower - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Bluetower - no type")
+
+        case "desert plain Blue ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Blue - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Blue - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Blue - no type")
+
+        case "desert plain Redtower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Redtower - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Redtower - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Redtower - no type")
+
+        case "desert plain Red ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert plain Red - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert plain Red - no type")
+            elif biggestValue == 3:
+                result = "red"
+                print("desert plain Red - no type")
 
     return result
 
