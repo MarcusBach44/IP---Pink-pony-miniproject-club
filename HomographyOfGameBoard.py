@@ -17,16 +17,14 @@ def ScaleBoardIsh(Img):
     #make brighter and grayscale
     cvtImg = cv2.convertScaleAbs(img, alpha=1.3, beta=5)
     gray = cv2.cvtColor(cvtImg, cv2.COLOR_BGR2GRAY)
-    kernel = np.ones((1, 1), np.uint64)
 
     #A ton of blur
     gray = cv2.bilateralFilter(gray, 13, 17, 3)
     median = cv2.medianBlur(gray, 37)
     blur = cv2.GaussianBlur(median, (47, 47), 1)
-    img_dilation = cv2.dilate(blur, kernel, iterations=3)
 
     #Do some edge detection
-    edged = cv2.Canny(img_dilation, 17, 17)
+    edged = cv2.Canny(blur, 17, 17)
     edged1 = edged
     edged2 = edged
     edged3 = edged
