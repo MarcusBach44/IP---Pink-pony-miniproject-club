@@ -54,7 +54,7 @@ def pipeline(img):
 
     # Find crowns in each grouping and calculate points
     for group in listOfGroups:
-        amountOfCrowns = find_crowns_in_group(group, tiles, templateCrowns, 0.6)
+        amountOfCrowns = find_crowns_in_group(group, tiles, templateCrowns, 0.57)
         totalPoints += amountOfCrowns * len(group)
     return totalPoints
 
@@ -62,6 +62,16 @@ def pipeline(img):
 
 #pipeline_scale_board()
 #pipeline()
+"""
+gameboards = glob('./Cropped and perspective corrected boards/*.jpg')
+for gameboard_number in range(74):
+
+    gameboard_string = "./Cropped and perspective corrected boards/"+ str(gameboard_number+1)+".jpg"
+    img = cv2.imread(gameboard_string)
+
+    calculatedScore = pipeline(img)
+    print("Board number: ", gameboard_number+1, "Calculated score: ", calculatedScore)
+"""
 
 gameboard_scores = [
     36, 43, 52, 42, 36, 43, 52, 42,
