@@ -1,5 +1,6 @@
 import cv2
 
+from glob import glob
 from find_crowns import find_crowns_in_group
 from seperateSquares import SeperatesTiles
 from blurPicturesAndFindColors import define_tiles
@@ -36,8 +37,8 @@ def pipeline_scale_board():
 
 
 #Here is the pipeline, which can be used for ALREADY scaled images of game boards
-def pipeline():
-    img = cv2.imread("./Cropped and perspective corrected boards/1.jpg")
+def pipeline(img):
+    #img = cv2.imread("./Cropped and perspective corrected boards/2.jpg")
     templateCrown1 = cv2.imread('./Crown Images/crown4.jpg')
     templateCrowns = [templateCrown1]
     totalPoints = 0
@@ -55,9 +56,37 @@ def pipeline():
     for group in listOfGroups:
         amountOfCrowns = find_crowns_in_group(group, tiles, templateCrowns, 0.6)
         totalPoints += amountOfCrowns * len(group)
-    print(totalPoints)
+    return totalPoints
 
 #######################################
 
 #pipeline_scale_board()
-pipeline()
+#pipeline()
+
+gameboard_scores = [
+    36, 43, 52, 42, 36, 43, 52, 42,
+    45, 38, 49, 22, 45, 38, 49, 16,
+    40, 60, 36, 52, 40, 60, 36, 52
+]
+comparative_score = []
+gameboards = glob('./Cropped and perspective corrected boards/*.jpg')
+
+for gameboard_number in range(24):
+
+    gameboard_string = "./Cropped and perspective corrected boards/"+ str(gameboard_number+1)+".jpg"
+    img = cv2.imread(gameboard_string)
+
+    calculatedScore = pipeline(img)
+
+    comparative_score.append(
+        (((calculatedScore - gameboard_scores[gameboard_number]) *100) / gameboard_scores[gameboard_number])
+    )
+
+    print("Gameboard number: ", gameboard_number+1, "Actual Score: ", gameboard_scores[gameboard_number], "Calculated score: ", calculatedScore)
+    print("Percent Deviation: ", comparative_score[gameboard_number],"%")
+
+average_deviation_percent = 0
+for score in comparative_score:
+    average_deviation_percent += abs(score)
+
+print(average_deviation_percent/24)
