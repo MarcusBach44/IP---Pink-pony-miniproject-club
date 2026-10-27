@@ -52,11 +52,13 @@ def pipeline(img):
     # Create lists with each grouping of tiles
     listOfGroups = grass_fire_algorithm(listOfAreas)
 
+    total_amount_of_crowns = 0
     # Find crowns in each grouping and calculate points
     for group in listOfGroups:
         amountOfCrowns = find_crowns_in_group(group, tiles, templateCrowns, 0.57)
+        total_amount_of_crowns += amountOfCrowns
         totalPoints += amountOfCrowns * len(group)
-    return totalPoints
+    return totalPoints, total_amount_of_crowns
 
 #######################################
 
@@ -72,12 +74,38 @@ for gameboard_number in range(74):
     calculatedScore = pipeline(img)
     print("Board number: ", gameboard_number+1, "Calculated score: ", calculatedScore)
 """
-
+################################################################################
+#Below here is comparative analysis of deviations
 gameboard_scores = [
     36, 43, 52, 42, 36, 43, 52, 42,
     45, 38, 49, 22, 45, 38, 49, 22,
     40, 60, 36, 52, 40, 60, 36, 52
 ]
+gameboard_crowns = [
+    9, 12, 10, 8, 9, 12, 10, 8,
+    11, 11, 7, 6, 11, 11, 7, 6,
+    10, 6, 11, 11, 10, 6, 11, 11
+]
+tiles_wrong = [
+    0,0,0,1,0,1,2,1,
+    3,1,2,3,3,2,4,4,
+    0,1,2,2,2,2,1,2
+]
+
+comparative_tiles = []
+for gameboard_number in range(24):
+    correct_tiles = 25 - tiles_wrong[gameboard_number]
+    comparative_tiles.append(
+        (((correct_tiles - 25) * 100) / 25)
+    )
+    print(comparative_tiles[gameboard_number])
+
+average_deviation_percent = 0
+for score in comparative_tiles:
+    average_deviation_percent += abs(score)
+print(average_deviation_percent/24)
+
+comparative_crowns = []
 comparative_score = []
 gameboards = glob('./Cropped and perspective corrected boards/*.jpg')
 
@@ -86,17 +114,27 @@ for gameboard_number in range(24):
     gameboard_string = "./Cropped and perspective corrected boards/"+ str(gameboard_number+1)+".jpg"
     img = cv2.imread(gameboard_string)
 
-    calculatedScore = pipeline(img)
-
+    calculatedScore, amount_of_crowns = pipeline(img)
     comparative_score.append(
         (((calculatedScore - gameboard_scores[gameboard_number]) *100) / gameboard_scores[gameboard_number])
+    )
+    comparative_crowns.append(
+        (((amount_of_crowns -gameboard_crowns[gameboard_number]) * 100) / gameboard_crowns[gameboard_number])
     )
 
     print("Gameboard number: ", gameboard_number+1, "Actual Score: ", gameboard_scores[gameboard_number], "Calculated score: ", calculatedScore)
     print("Percent Deviation: ", comparative_score[gameboard_number],"%")
 
+    print("Gameboard number: ", gameboard_number+1, "Actual crowns: ", gameboard_crowns[gameboard_number], "Found crowns: ", amount_of_crowns)
+    print("Percent Deviation: ", comparative_crowns[gameboard_number],"%")
+
 average_deviation_percent = 0
 for score in comparative_score:
     average_deviation_percent += abs(score)
-
 print(average_deviation_percent/24)
+
+average_deviation_percent = 0
+for score in comparative_crowns:
+    average_deviation_percent += abs(score)
+print(average_deviation_percent/24)
+
