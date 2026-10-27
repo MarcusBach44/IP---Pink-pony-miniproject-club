@@ -315,6 +315,16 @@ def check_color(img):
             elif biggestValue == 3:
                 result = "crown"
 
+        case "desert Yellowtower ":
+            if biggestValue == 1:
+                result = "blue"
+                print("desert Yellowtower - no type")
+            elif biggestValue == 2:
+                result = "green"
+                print("desert Yellowtower - no type")
+            elif biggestValue == 3:
+                result = "desert"
+
         case "desert plain Yellow ":
             if biggestValue == 1:
                 result = "blue"
